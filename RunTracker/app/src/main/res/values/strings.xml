@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Run tracker</string>
+    <string name="runs_label">Runs</string>
+    <string name="graphs_label">Graphs</string>
+</resources>
