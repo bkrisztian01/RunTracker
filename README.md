@@ -23,5 +23,7 @@ Az alkalmazásban lehetőség van mérés indítására. Mérés közben a progr
 - Fragmentek
 - RecyclerView
 - Perzisztens adattárolás
-- Google Maps API
+- Térkép API
 - Floating Action Button
+- Oszlopdiagramok
+- Intent
