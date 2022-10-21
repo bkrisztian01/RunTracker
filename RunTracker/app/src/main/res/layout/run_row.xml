@@ -6,16 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:padding="4dp"
-    android:background="@color/white"
-    android:layout_margin="4dp">
+    android:padding="15dp"
+    android:background="@drawable/layout_bg"
+    android:layout_margin="4dp"
+    android:clipToOutline="true" >
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/iv_run_icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        tools:src="@mipmap/ic_launcher"
-        app:shapeAppearanceOverlay="@style/roundedCornersImageView"/>
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/ic_launcher"
+        app:shapeAppearanceOverlay="@style/roundedCorners"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,6 +29,15 @@
             android:id="@+id/tv_run_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Monday run" />
+            tools:text="Monday run"
+            android:textSize="17sp"
+            android:textColor="@color/md_theme_light_primary"/>
+
+        <TextView
+            android:id="@+id/tv_run_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="10/20/22" />
+
     </LinearLayout>
 </LinearLayout>

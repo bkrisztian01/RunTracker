@@ -1,13 +1,18 @@
 package com.buikr.runtracker
 
-import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
+import android.R
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import com.buikr.runtracker.adapter.RunItemRecyclerViewAdapter
 import com.buikr.runtracker.databinding.ActivityMainBinding
-import com.buikr.runtracker.databinding.RunRowBinding
 import com.buikr.runtracker.model.Run
+import java.time.LocalDate
+import java.util.*
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -15,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     var oldPosition = 0
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -23,14 +29,12 @@ class MainActivity : AppCompatActivity() {
         runItemRecyclerViewAdapter =  RunItemRecyclerViewAdapter()
         binding.rvRuns.adapter = runItemRecyclerViewAdapter
         for (i in 1..20) {
-            runItemRecyclerViewAdapter.addItem(Run(1, "Monday run", "asd"))
+            runItemRecyclerViewAdapter.addItem(Run(1, "Monday run", LocalDate.now(), "asd"))
         }
 
-        binding.fabRun.setOnClickListener {
 
-        }
-        binding.svMain.setOnScrollChangeListener { view, scrollX, scrollY, oldScrollX, oldScrollY ->
-
+        binding.searchviewRuns.setOnClickListener {
+            binding.searchviewRuns.isIconified = false;
         }
     }
 }
