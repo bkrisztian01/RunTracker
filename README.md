@@ -25,3 +25,5 @@ Az alkalmazásban lehetőség van mérés indítására. Mérés közben a progr
 - Room
 - Térkép API
 - FloatingActionButton
+- ViewModel
+- Értesítés
