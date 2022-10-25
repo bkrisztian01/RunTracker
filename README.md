@@ -3,28 +3,27 @@
 Információk [itt](https://viauac00.github.io/laborok/hf)
 
 ## Mobil- és webes szoftverek
-### [Dátum]
-### [Alkalmazás neve]
-### [Teljes név] - ([Neptun kód])
-### [e-mail cím] 
-### Laborvezető: [Laborvezető neve]
+### 2022. október 22.
+### Run tracker
+### Bui Quanganh Krisztián - (SU4NX2)
+### bui.krisztian01@gmail.com 
+### Laborvezető: Sipos Tamás
 
 ## Bemutatás
 
-Az alkalmazás rövid, 2-3 mondatos bemutatása. Honnan az ötlet, mi szülte az igényt, ki lehetne a célközönség.
-A laboron és előadáson bemutatott alkalmazásokat nem lehet házi feladatnak választani.
+Az alkalmazás a futásaid mérését és nyilvántartását teszi lehetővé. Jól jöhet ez az alkalmazás azoknak, akik szeretnének egy egyszerű alkalmazást a futások méréséhez és nyilvántartásához.
 
 ## Főbb funkciók
 
-Az alkalmazás minden funkciójára kiterjedő leírás (röviden, lényegre törően). Legyen egyértelműen eldönthető, hogy az adott funkció implementálva van-e!
-Pl.: Az alkalmazással lehetőség van tételek felvételére és tárolására, valamint azok rendezett megjelenítésére, illetve frissítésre X hálózati hívás segítségével.
+Az alkalmazásban lehetőség van mérés indítására. Mérés közben a program méri az időt, a megtett távolságot, menetsebességet (perc/km) és a megtett útvonalat. A megtett méréseket a kezdőlapon ki lehet választani és a hozzátartozó adatokat meg lehet nézni. A méréseket el lehet nevezni és lehet írni hozzá leírást/megjegyzéseket is. A kezdőlapon egy oszlopdiagram is látható lesz a futások adatai alapján.
 
 ## Választott technológiák:
 
-- (UI)
-- (fragmentek)
-- (RecyclerView)
-- (Perzisztens adattárolás)
-
-
-#Házi feladat dokumentáció (ha nincs, ez a fejezet törölhető)
+- UI
+- Fragmentek
+- RecyclerView
+- Room
+- Térkép API
+- FloatingActionButton
+- ViewModel
+- Értesítés
