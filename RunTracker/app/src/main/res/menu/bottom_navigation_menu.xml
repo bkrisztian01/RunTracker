@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/page_1"
+        android:id="@+id/runs"
         android:enabled="true"
         android:icon="@drawable/ic_list"
         android:title="@string/runs_label"/>
     <item
-        android:id="@+id/page_2"
+        android:id="@+id/graphs"
         android:enabled="true"
         android:icon="@drawable/ic_bar_chart"
         android:title="@string/graphs_label"/>

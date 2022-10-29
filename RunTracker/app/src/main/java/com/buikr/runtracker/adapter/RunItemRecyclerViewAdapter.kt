@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.buikr.runtracker.databinding.RunRowBinding
 import com.buikr.runtracker.model.Run
-import java.time.format.DateTimeFormatter
-import java.util.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
 
 class RunItemRecyclerViewAdapter :
     ListAdapter<Run, RunItemRecyclerViewAdapter.ViewHolder>(itemCallback) {
@@ -27,16 +27,7 @@ class RunItemRecyclerViewAdapter :
     }
 
     private var runList = emptyList<Run>()
-
-    inner class ViewHolder(val binding: RunRowBinding) : RecyclerView.ViewHolder(binding.root) {
-        var run: Run? = null
-
-        init {
-            itemView.setOnClickListener {
-                // TODO
-            }
-        }
-    }
+    var itemClickListener: RunItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(RunRowBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -49,9 +40,10 @@ class RunItemRecyclerViewAdapter :
         holder.run = run
 
         holder.binding.tvRunName.text = run.title
-        holder.binding.tvRunDate.text = run.date.format(DateTimeFormatter.ofPattern("MM/dd/yyyy"))
+        val pattern = "MM/dd/yyyy HH:mm"
+        val df: DateFormat = SimpleDateFormat(pattern)
+        holder.binding.tvRunDate.text = df.format(run.date)
     }
-
 
     fun addItem(run: Run) {
         runList += run
@@ -71,5 +63,19 @@ class RunItemRecyclerViewAdapter :
     fun shuffleItems() {
         runList = runList.shuffled()
         submitList(runList)
+    }
+
+    inner class ViewHolder(val binding: RunRowBinding) : RecyclerView.ViewHolder(binding.root) {
+        var run: Run? = null
+
+        init {
+            itemView.setOnClickListener {
+                run?.let { run -> itemClickListener?.onItemClick(run) }
+            }
+        }
+    }
+
+    interface RunItemClickListener {
+        fun onItemClick(run: Run)
     }
 }
