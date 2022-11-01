@@ -5,10 +5,12 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.buikr.runtracker.databinding.ActivityRunDetailBinding
+import com.buikr.runtracker.fragments.EditRunDialogFragment
 import com.buikr.runtracker.model.Run
+import com.buikr.runtracker.util.formatToString
 
 
-class RunDetailActivity : AppCompatActivity() {
+class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDialogListener {
     companion object {
         val KEY_RUN = "KEY_RUN"
     }
@@ -26,7 +28,12 @@ class RunDetailActivity : AppCompatActivity() {
 
         run = this.intent.getParcelableExtra(KEY_RUN)!!
         binding.toolbarLayout.title = run.title
-//        binding.tvDistance.text = getString(R.string.distance_value, run.distance)
+        binding.tvDistanceValue.text = getString(R.string.distance_value, run.distance)
+        var pace: Int = (run.duration / run.distance).toInt()
+        binding.tvPaceValue.text = getString(R.string.pace_value, pace / 60, pace % 60)
+        binding.tvTimeValue.text = getString(R.string.time_value, run.duration / 60, run.duration % 60)
+        binding.tvDescription.text = run.description
+        binding.tvDate.text = run.date.formatToString("MM/dd/yyyy - HH:mm")
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
@@ -39,7 +46,22 @@ class RunDetailActivity : AppCompatActivity() {
             android.R.id.home -> {
                 finish()
             }
+            R.id.edit_run -> {
+                val editRunFragment = EditRunDialogFragment()
+                editRunFragment.startingName = run.title
+                editRunFragment.startingDescription = run.description
+                editRunFragment.show(supportFragmentManager, "TAG")
+            }
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onRunEdited(name: String, description: String) {
+        run.title = name;
+        run.description = description;
+        binding.toolbarLayout.title = run.title
+        binding.tvDescription.text = run.description
+    }
+
+
 }

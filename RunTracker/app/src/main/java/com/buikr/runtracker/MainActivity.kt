@@ -15,7 +15,6 @@ class MainActivity : AppCompatActivity(), RunItemRecyclerViewAdapter.RunItemClic
     private lateinit var binding: ActivityMainBinding
     private lateinit var runItemRecyclerViewAdapter: RunItemRecyclerViewAdapter
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +36,19 @@ class MainActivity : AppCompatActivity(), RunItemRecyclerViewAdapter.RunItemClic
         adapter.itemClickListener = this
         runItemRecyclerViewAdapter = adapter
         binding.rvRuns.adapter = runItemRecyclerViewAdapter
+
+        // TODO: REMOVE AFTER TESTING
         for (i in 1..20) {
-            runItemRecyclerViewAdapter.addItem(Run(1, "Monday run", Calendar.getInstance().time, "asd", 123, 1.23))
+            runItemRecyclerViewAdapter.addItem(
+                Run(
+                    1,
+                    "Monday run",
+                    Calendar.getInstance().time,
+                    "A very long description about the run.\n\n\n\nIt was very exhausting.",
+                    123,
+                    1.23
+                )
+            )
         }
 
         binding.searchviewRuns.setOnClickListener {

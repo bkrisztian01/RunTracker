@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.buikr.runtracker.databinding.RunRowBinding
 import com.buikr.runtracker.model.Run
-import java.text.DateFormat
-import java.text.SimpleDateFormat
+import com.buikr.runtracker.util.formatToString
 
 class RunItemRecyclerViewAdapter :
     ListAdapter<Run, RunItemRecyclerViewAdapter.ViewHolder>(itemCallback) {
@@ -40,9 +39,7 @@ class RunItemRecyclerViewAdapter :
         holder.run = run
 
         holder.binding.tvRunName.text = run.title
-        val pattern = "MM/dd/yyyy HH:mm"
-        val df: DateFormat = SimpleDateFormat(pattern)
-        holder.binding.tvRunDate.text = df.format(run.date)
+        holder.binding.tvRunDate.text = run.date.formatToString("MM/dd/yyyy HH:mm")
     }
 
     fun addItem(run: Run) {

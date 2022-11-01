@@ -6,8 +6,13 @@
     <string name="edit">Edit</string>
     <string name="distance_value">%.2f km</string>
     <string name="distance">Distance</string>
-    <string name="pace_value">%1d\' %1d\"</string>
+    <string name="pace_value">%1d\'%1d\"</string>
     <string name="pace">Pace</string>
-    <string name="time_value">%1d:%1d</string>
+    <string name="time_value">%02d:%02d</string>
     <string name="time">Time</string>
+    <string name="description">Description</string>
+    <string name="name">Name</string>
+    <string name="edit_run">Edit run</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_ok">Ok</string>
 </resources>

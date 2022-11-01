@@ -6,12 +6,12 @@ import java.util.*
 
 @Parcelize
 data class Run(
-    val id: Int,
-    val title: String,
-    val date: Date,
-    val description: String,
-    val duration: Int,          // in seconds
-    val distance: Double,       // in kilometers
+    var id: Int,
+    var title: String,
+    var date: Date,
+    var description: String,
+    var duration: Int,          // in seconds
+    var distance: Double,       // in kilometers
 ) : Parcelable {
 //    constructor(parcel: Parcel) : this(
 //        parcel.readInt(),
