@@ -7,7 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.buikr.runtracker.adapter.RunItemRecyclerViewAdapter
 import com.buikr.runtracker.databinding.ActivityMainBinding
-import com.buikr.runtracker.model.Run
+import com.buikr.runtracker.data.Run
 import java.util.*
 
 

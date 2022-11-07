@@ -6,7 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.buikr.runtracker.databinding.ActivityRunDetailBinding
 import com.buikr.runtracker.fragments.EditRunDialogFragment
-import com.buikr.runtracker.model.Run
+import com.buikr.runtracker.data.Run
 import com.buikr.runtracker.util.formatToString
 
 

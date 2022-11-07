@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.buikr.runtracker.databinding.RunRowBinding
-import com.buikr.runtracker.model.Run
+import com.buikr.runtracker.data.Run
 import com.buikr.runtracker.util.formatToString
 
 class RunItemRecyclerViewAdapter :
