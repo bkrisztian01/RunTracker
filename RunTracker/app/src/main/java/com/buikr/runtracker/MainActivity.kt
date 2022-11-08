@@ -5,15 +5,18 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.buikr.runtracker.adapter.RunItemRecyclerViewAdapter
-import com.buikr.runtracker.databinding.ActivityMainBinding
 import com.buikr.runtracker.data.Run
+import com.buikr.runtracker.databinding.ActivityMainBinding
+import com.buikr.runtracker.viewmodel.RunViewModel
 import java.util.*
 
 
 class MainActivity : AppCompatActivity(), RunItemRecyclerViewAdapter.RunItemClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var runItemRecyclerViewAdapter: RunItemRecyclerViewAdapter
+    private lateinit var runViewModel: RunViewModel
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,19 +40,20 @@ class MainActivity : AppCompatActivity(), RunItemRecyclerViewAdapter.RunItemClic
         runItemRecyclerViewAdapter = adapter
         binding.rvRuns.adapter = runItemRecyclerViewAdapter
 
-        // TODO: REMOVE AFTER TESTING
-        for (i in 1..20) {
-            runItemRecyclerViewAdapter.addItem(
-                Run(
-                    1,
-                    "Monday run",
-                    Calendar.getInstance().time,
-                    "A very long description about the run.\n\n\n\nIt was very exhausting.",
-                    123,
-                    1.23
-                )
-            )
+        runViewModel = ViewModelProvider(this)[RunViewModel::class.java]
+        runViewModel.allRuns.observe(this) { runs ->
+            runItemRecyclerViewAdapter.submitList(runs)
         }
+
+//        runViewModel.insert(Run(
+//            0,
+//            "Monday run",
+//            Calendar.getInstance().time,
+//            "A very long description about the run.\n\n\n\nIt was very exhausting.",
+//            123,
+//            1.23,
+//            ""
+//        ))
 
         binding.searchviewRuns.setOnClickListener {
             binding.searchviewRuns.isIconified = false
@@ -58,7 +62,7 @@ class MainActivity : AppCompatActivity(), RunItemRecyclerViewAdapter.RunItemClic
 
     override fun onItemClick(run: Run) {
         val intent = Intent(this, RunDetailActivity::class.java)
-        intent.putExtra(RunDetailActivity.KEY_RUN, run)
+        intent.putExtra(RunDetailActivity.KEY_RUN, run.id)
         startActivity(intent)
     }
 }

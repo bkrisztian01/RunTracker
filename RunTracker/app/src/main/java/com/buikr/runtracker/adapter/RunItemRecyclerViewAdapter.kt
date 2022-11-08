@@ -7,8 +7,8 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.buikr.runtracker.databinding.RunRowBinding
 import com.buikr.runtracker.data.Run
+import com.buikr.runtracker.databinding.RunRowBinding
 import com.buikr.runtracker.util.formatToString
 
 class RunItemRecyclerViewAdapter :
@@ -25,7 +25,6 @@ class RunItemRecyclerViewAdapter :
         }
     }
 
-    private var runList = emptyList<Run>()
     var itemClickListener: RunItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,32 +33,12 @@ class RunItemRecyclerViewAdapter :
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val run = runList[position]
+        val run = this.getItem(position)
 
         holder.run = run
 
         holder.binding.tvRunName.text = run.title
         holder.binding.tvRunDate.text = run.date.formatToString("MM/dd/yyyy HH:mm")
-    }
-
-    fun addItem(run: Run) {
-        runList += run
-        submitList(runList)
-    }
-
-    fun addAll(runs: List<Run>) {
-        runList += runs
-        submitList(runList)
-    }
-
-    fun deleteRow(position: Int) {
-        runList = runList.filterIndexed { index, _ -> index != position }
-        submitList(runList)
-    }
-
-    fun shuffleItems() {
-        runList = runList.shuffled()
-        submitList(runList)
     }
 
     inner class ViewHolder(val binding: RunRowBinding) : RecyclerView.ViewHolder(binding.root) {
