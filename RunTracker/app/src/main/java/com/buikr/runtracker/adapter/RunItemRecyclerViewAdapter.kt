@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.buikr.runtracker.data.Run
 import com.buikr.runtracker.databinding.RunRowBinding
 import com.buikr.runtracker.util.formatToString
+import java.util.*
 
 class RunItemRecyclerViewAdapter :
     ListAdapter<Run, RunItemRecyclerViewAdapter.ViewHolder>(itemCallback) {
@@ -25,6 +26,7 @@ class RunItemRecyclerViewAdapter :
         }
     }
 
+    var allRuns: List<Run>? = null
     var itemClickListener: RunItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,6 +41,28 @@ class RunItemRecyclerViewAdapter :
 
         holder.binding.tvRunName.text = run.title
         holder.binding.tvRunDate.text = run.date.formatToString("MM/dd/yyyy HH:mm")
+    }
+
+    fun filter(text: String) {
+        if (text.isEmpty()) {
+            submitList(allRuns)
+            notifyDataSetChanged()
+            return
+        }
+
+        allRuns?.let { allRuns ->
+            var filteredList: List<Run> = listOf<Run>()
+            var lText = text.lowercase(Locale.getDefault())
+            for (run in allRuns) {
+                if (run.title.lowercase(Locale.getDefault()).contains(text)
+                ) {
+                    filteredList = filteredList.plus(run)
+                }
+            }
+
+            submitList(filteredList)
+            notifyDataSetChanged()
+        }
     }
 
     inner class ViewHolder(val binding: RunRowBinding) : RecyclerView.ViewHolder(binding.root) {

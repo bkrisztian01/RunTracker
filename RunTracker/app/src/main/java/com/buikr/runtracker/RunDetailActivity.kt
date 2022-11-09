@@ -3,6 +3,7 @@ package com.buikr.runtracker
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.buikr.runtracker.data.Run
@@ -41,6 +42,9 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
             binding.tvDescription.text = run.description
             binding.tvDate.text = run.date.formatToString("MM/dd/yyyy - HH:mm")
         }
+
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        window.statusBarColor = resources.getColor(R.color.md_theme_light_background)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {

@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_light_background"
+    android:background="@color/md_theme_light_background"
     android:orientation="vertical"
     tools:context=".RunDetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cardview_light_background"
+        android:background="@color/md_theme_light_background"
         android:fitsSystemWindows="true">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
@@ -19,7 +19,7 @@
             style="?attr/collapsingToolbarLayoutLargeStyle"
             android:layout_width="match_parent"
             android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
-            app:contentScrim="@color/cardview_light_background"
+            app:contentScrim="@color/md_theme_light_background"
             app:expandedTitleTextAppearance="@style/ExpandedAppBarRunDetail"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:title="Run name">

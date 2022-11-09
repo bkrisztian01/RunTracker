@@ -3,8 +3,10 @@ package com.buikr.runtracker
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import com.buikr.runtracker.adapter.RunItemRecyclerViewAdapter
 import com.buikr.runtracker.data.Run
@@ -35,29 +37,45 @@ class MainActivity : AppCompatActivity(), RunItemRecyclerViewAdapter.RunItemClic
             }
         }
 
-        var adapter = RunItemRecyclerViewAdapter()
-        adapter.itemClickListener = this
-        runItemRecyclerViewAdapter = adapter
+        runItemRecyclerViewAdapter = RunItemRecyclerViewAdapter()
+        runItemRecyclerViewAdapter.itemClickListener = this
         binding.rvRuns.adapter = runItemRecyclerViewAdapter
 
         runViewModel = ViewModelProvider(this)[RunViewModel::class.java]
         runViewModel.allRuns.observe(this) { runs ->
+            runItemRecyclerViewAdapter.allRuns = runs
             runItemRecyclerViewAdapter.submitList(runs)
         }
-
-//        runViewModel.insert(Run(
-//            0,
-//            "Monday run",
-//            Calendar.getInstance().time,
-//            "A very long description about the run.\n\n\n\nIt was very exhausting.",
-//            123,
-//            1.23,
-//            ""
-//        ))
 
         binding.searchviewRuns.setOnClickListener {
             binding.searchviewRuns.isIconified = false
         }
+
+        binding.searchviewRuns.setOnFocusChangeListener {
+            v, focused ->
+            if (!focused && "".equals(binding.searchviewRuns.query)) {
+                binding.searchviewRuns.clearFocus()
+            }
+        }
+
+        binding.searchviewRuns.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(qString: String): Boolean {
+                runItemRecyclerViewAdapter.filter(qString);
+                return true;
+            }
+            override fun onQueryTextSubmit(qString: String): Boolean {
+                runItemRecyclerViewAdapter.filter(qString);
+                return true;
+            }
+        })
+
+        binding.fabRun.setOnClickListener {
+            startActivity(Intent(this, RunSessionActivity::class.java))
+        }
+
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        window.statusBarColor = resources.getColor(R.color.md_theme_light_background)
     }
 
     override fun onItemClick(run: Run) {

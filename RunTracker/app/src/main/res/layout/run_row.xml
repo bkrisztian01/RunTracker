@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             tools:text="Monday run"
             android:textSize="17sp"
-            android:textColor="@color/md_theme_light_primary"/>
+            android:textColor="@color/md_theme_light_onSecondaryContainer"/>
 
         <TextView
             android:id="@+id/tv_run_date"
