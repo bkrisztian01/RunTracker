@@ -4,9 +4,11 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.buikr.runtracker.R
 import com.buikr.runtracker.data.Run
 import com.buikr.runtracker.databinding.RunRowBinding
 import com.buikr.runtracker.util.formatToString
@@ -24,6 +26,16 @@ class RunItemRecyclerViewAdapter :
                 return oldItem == newItem
             }
         }
+
+        val weekDayIcon = mapOf(
+            Calendar.MONDAY to R.drawable.ic_mon,
+            Calendar.TUESDAY to R.drawable.ic_tue,
+            Calendar.WEDNESDAY to R.drawable.ic_wed,
+            Calendar.THURSDAY to R.drawable.ic_thu,
+            Calendar.FRIDAY to R.drawable.ic_fri,
+            Calendar.SATURDAY to R.drawable.ic_sat,
+            Calendar.SUNDAY to R.drawable.ic_sun,
+        )
     }
 
     var allRuns: List<Run>? = null
@@ -39,6 +51,9 @@ class RunItemRecyclerViewAdapter :
 
         holder.run = run
 
+        val calendarDate = Calendar.getInstance()
+        calendarDate.time = run.date
+        holder.binding.ivRunIcon.setImageDrawable(ContextCompat.getDrawable(holder.binding.ivRunIcon.context, weekDayIcon[calendarDate.get(Calendar.DAY_OF_WEEK)]!!))
         holder.binding.tvRunName.text = run.title
         holder.binding.tvRunDate.text = run.date.formatToString("MM/dd/yyyy HH:mm")
     }

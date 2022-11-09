@@ -3,7 +3,7 @@
 
     <style name="RoundedCornersRunItem" parent="">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">10dp</item>
+        <item name="cornerSize">20dp</item>
     </style>
 
     <style name="RoundedCornersSearch" parent="">
