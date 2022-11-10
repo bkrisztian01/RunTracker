@@ -18,4 +18,11 @@
     <string name="button_ok">Ok</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="rationale_dialog_title">Attention!</string>
+    <string name="location_permission_explanation">The application needs to access your location to track your run.</string>
+    <string name="exit">Exit</string>
+    <string name="proceed">Proceed</string>
+    <string name="session">Session</string>
+    <string name="notification_description">Run is in session.</string>
+    <string name="running">Running</string>
 </resources>

@@ -32,8 +32,8 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
 
         runViewModel = ViewModelProvider(this)[RunViewModel::class.java]
 
-         runViewModel.getById(this.intent.getLongExtra(KEY_RUN, 0)).observe(this) { asd ->
-            this.run = asd!!
+         runViewModel.getById(this.intent.getLongExtra(KEY_RUN, 0)).observe(this) { r ->
+            this.run = r!!
             binding.toolbarLayout.title = run.title
             binding.tvDistanceValue.text = getString(R.string.distance_value, run.distance)
             val pace: Int = (run.duration / run.distance).toInt()
