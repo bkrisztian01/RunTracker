@@ -94,10 +94,12 @@
 
     <Chronometer
         android:id="@+id/cm_time"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="80sp"
-        android:textStyle="bold"
+        android:textAlignment="center"
+        android:fontFamily="@font/robotocondensed_regular"
+        android:textSize="90sp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/bt_time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
