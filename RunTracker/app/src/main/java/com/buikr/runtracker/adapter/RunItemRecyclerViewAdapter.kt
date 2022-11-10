@@ -66,10 +66,11 @@ class RunItemRecyclerViewAdapter :
         }
 
         allRuns?.let { allRuns ->
-            var filteredList: List<Run> = listOf<Run>()
-            var lText = text.lowercase(Locale.getDefault())
+            var filteredList: List<Run> = listOf()
+            val textLowercase = text.lowercase()
             for (run in allRuns) {
-                if (run.title.lowercase(Locale.getDefault()).contains(text)
+                if (run.title.lowercase().contains(textLowercase) ||
+                    run.date.formatToString("MM/dd/yyyy HH:mm").contains(textLowercase)
                 ) {
                     filteredList = filteredList.plus(run)
                 }

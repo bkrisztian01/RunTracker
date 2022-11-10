@@ -15,7 +15,7 @@ class RunViewModel : ViewModel() {
     val allRuns: LiveData<List<Run>>
 
     init {
-        val runDao = RunTrackerApplication.runDatabase.shoppingItemDao()
+        val runDao = RunTrackerApplication.runDatabase.runDao()
         repository = RunRepository(runDao)
         allRuns = repository.getAllRuns()
     }
