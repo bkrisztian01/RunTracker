@@ -1,9 +1,13 @@
 package com.buikr.runtracker
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.buikr.runtracker.data.Run
@@ -29,6 +33,7 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
     private lateinit var runViewModel: RunViewModel
     private lateinit var run: Run
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRunDetailBinding.inflate(layoutInflater)
@@ -56,9 +61,32 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
 
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         window.statusBarColor = resources.getColor(R.color.md_theme_light_background)
+
+        // Make scrollview not scrollable when panning on mapview
+        binding.transparentImage.setOnTouchListener(OnTouchListener { v, event ->
+            val action = event.action
+            when (action) {
+                MotionEvent.ACTION_DOWN -> {
+                    // Disallow ScrollView to intercept touch events.
+                    binding.scrollView.requestDisallowInterceptTouchEvent(true)
+                    // Disable touch on transparent view
+                    false
+                }
+                MotionEvent.ACTION_UP -> {
+                    // Allow ScrollView to intercept touch events.
+                    binding.scrollView.requestDisallowInterceptTouchEvent(false)
+                    true
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    binding.scrollView.requestDisallowInterceptTouchEvent(true)
+                    false
+                }
+                else -> true
+            }
+        })
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.run_detail_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
@@ -73,6 +101,22 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
                 editRunFragment.startingName = run.title
                 editRunFragment.startingDescription = run.description
                 editRunFragment.show(supportFragmentManager, "TAG")
+            }
+            R.id.delete_run -> {
+                val alertDialog: AlertDialog = AlertDialog.Builder(this).create()
+                alertDialog.setTitle("Delete run?")
+                alertDialog.setMessage("Are you sure you want to delete this run?")
+                alertDialog.setButton(
+                    AlertDialog.BUTTON_POSITIVE,
+                    getString(R.string.yes)
+                ) { dialog, which ->
+                    runViewModel.delete(run)
+                    finish()
+                }
+                alertDialog.setButton(
+                    AlertDialog.BUTTON_NEGATIVE, getString(R.string.no)
+                ) { dialog, which -> dialog.dismiss() }
+                alertDialog.show()
             }
         }
         return super.onOptionsItemSelected(item)

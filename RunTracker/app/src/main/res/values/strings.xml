@@ -25,4 +25,5 @@
     <string name="session">Session</string>
     <string name="notification_description">Run is in session.</string>
     <string name="running">Running</string>
+    <string name="delete">Delete</string>
 </resources>
