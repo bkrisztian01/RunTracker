@@ -37,7 +37,14 @@ class LocationService : Service(), LocationListener {
     private val mainHandler = Handler(Looper.getMainLooper())
     private val updateNotificationTask = object : Runnable {
         override fun run() {
-            updateNotification("${msToFormatedString(stopwatch.elapsedTime)} - ${String.format("%.2f", distance)} km")
+            updateNotification(
+                "${msToFormatedString(stopwatch.elapsedTime)} - ${
+                    String.format(
+                        "%.2f",
+                        distance
+                    )
+                } km"
+            )
             mainHandler.postDelayed(this, 1000)
         }
     }
@@ -58,6 +65,10 @@ class LocationService : Service(), LocationListener {
             isLocationUpdateRunning = true
             mLocationManager = this.getSystemService(LOCATION_SERVICE) as LocationManager
             if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(
                     this,
                     Manifest.permission.ACCESS_FINE_LOCATION
                 ) != PackageManager.PERMISSION_GRANTED

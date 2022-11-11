@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity(), RunItemRecyclerViewAdapter.RunItemClic
 
     companion object {
         private const val PERMISSIONS_REQUEST_LOCATION = 100
-        private const val PERMISSIONS_REQUEST_BACKGROUND_LOCATION = 99
     }
 
     private lateinit var binding: ActivityMainBinding
@@ -88,6 +87,28 @@ class MainActivity : AppCompatActivity(), RunItemRecyclerViewAdapter.RunItemClic
         binding.rvRuns.adapter = runItemRecyclerViewAdapter
 
         runViewModel = ViewModelProvider(this)[RunViewModel::class.java]
+
+//        // For debugging
+//        val latLngs = mutableListOf(
+//            LatLng(31.0, 31.0),
+//            LatLng(10.0, 31.0),
+//            LatLng(10.0, 10.0),
+//            LatLng(31.0, 131.0),
+//            LatLng(31.0, 31.0),
+//        )
+//
+//        runViewModel.insert(
+//            Run(
+//                0,
+//                "Monday run",
+//                Calendar.getInstance().time,
+//                "Legyen mar vege \n\n\n\n\n\n\n\n\n\nIstenem",
+//                123123,
+//                1.23,
+//                latLngs
+//            )
+//        )
+
         runViewModel.allRuns.observe(this) { runs ->
             runItemRecyclerViewAdapter.allRuns = runs
             runItemRecyclerViewAdapter.submitList(runs)

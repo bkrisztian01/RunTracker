@@ -6,9 +6,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.buikr.runtracker.util.DateConverter
+import com.buikr.runtracker.util.LatLngListConverter
 
 @Database(entities = [RoomRun::class], version = 1)
-@TypeConverters(DateConverter::class)
+@TypeConverters(
+    DateConverter::class,
+    LatLngListConverter::class
+)
 abstract class RunDatabase : RoomDatabase() {
     abstract fun runDao(): RunDao
 

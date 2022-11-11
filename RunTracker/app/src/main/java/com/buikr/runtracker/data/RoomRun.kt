@@ -3,6 +3,7 @@ package com.buikr.runtracker.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.android.gms.maps.model.LatLng
 import java.util.*
 
 @Entity(tableName = "Run")
@@ -13,5 +14,5 @@ data class RoomRun(
     @ColumnInfo(name = "description") var description: String,
     @ColumnInfo(name = "duration") var duration: Int,          // in seconds
     @ColumnInfo(name = "distance") var distance: Double,       // in kilometers
-    @ColumnInfo(name = "location_data_path") var locationDataPath: String
+    @ColumnInfo(name = "location_data") var locationData: List<LatLng>
 ) { }

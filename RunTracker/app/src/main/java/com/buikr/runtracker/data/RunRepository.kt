@@ -22,7 +22,7 @@ class RunRepository(private val runDao: RunDao) {
             description = description,
             duration = duration,
             distance = distance,
-            locationDataPath = locationDataPath
+            locationData = locationData
         )
     }
 
@@ -33,7 +33,7 @@ class RunRepository(private val runDao: RunDao) {
             description = description,
             duration = duration,
             distance = distance,
-            locationDataPath = locationDataPath
+            locationData = locationData
         )
     }
 

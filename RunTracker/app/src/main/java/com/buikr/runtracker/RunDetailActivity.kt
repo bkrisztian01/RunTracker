@@ -11,9 +11,16 @@ import com.buikr.runtracker.databinding.ActivityRunDetailBinding
 import com.buikr.runtracker.fragments.EditRunDialogFragment
 import com.buikr.runtracker.util.formatToString
 import com.buikr.runtracker.viewmodel.RunViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.PolylineOptions
 
 
-class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDialogListener {
+class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDialogListener,
+    OnMapReadyCallback {
     companion object {
         val KEY_RUN = "KEY_RUN"
     }
@@ -32,15 +39,19 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
 
         runViewModel = ViewModelProvider(this)[RunViewModel::class.java]
 
-         runViewModel.getById(this.intent.getLongExtra(KEY_RUN, 0)).observe(this) { r ->
+        runViewModel.getById(this.intent.getLongExtra(KEY_RUN, 0)).observe(this) { r ->
             this.run = r!!
             binding.toolbarLayout.title = run.title
             binding.tvDistanceValue.text = getString(R.string.distance_value, run.distance)
             val pace: Int = (run.duration / run.distance).toInt()
             binding.tvPaceValue.text = getString(R.string.pace_value, pace / 60, pace % 60)
-            binding.tvTimeValue.text = getString(R.string.time_value, run.duration / 60, run.duration % 60)
+            binding.tvTimeValue.text =
+                getString(R.string.time_value, run.duration / 60, run.duration % 60)
             binding.tvDescription.text = run.description
             binding.tvDate.text = run.date.formatToString("MM/dd/yyyy - HH:mm")
+
+            val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+            mapFragment.getMapAsync(this)
         }
 
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
@@ -53,7 +64,7 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             android.R.id.home -> {
                 finish()
             }
@@ -75,5 +86,29 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
         binding.tvDescription.text = run.description
     }
 
+    override fun onMapReady(map: GoogleMap) {
+        val builder = LatLngBounds.builder()
 
+        val latLngs = run.locationData
+
+        if (run.locationData.isEmpty()) return
+
+        val polyline = PolylineOptions()
+            .color(R.color.md_theme_light_tertiary)
+
+        for (latLng in latLngs) {
+            polyline.add(latLng)
+            builder.include(latLng)
+        }
+
+        val bounds = builder.build()
+
+        val cu = CameraUpdateFactory.newLatLngBounds(bounds, 200)
+
+        map.addPolyline(polyline)
+
+        map.setOnMapLoadedCallback {
+            map.animateCamera(cu)
+        }
+    }
 }
