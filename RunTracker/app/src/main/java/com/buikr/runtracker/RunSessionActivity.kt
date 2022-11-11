@@ -105,7 +105,7 @@ class RunSessionActivity : AppCompatActivity() {
             runViewModel.insert(
                 Run(
                     0,
-                    "${today.formatToString("EE")} run",
+                    "${today.formatToString("EEEE")} run",
                     today,
                     "",
                     (binding.cmTime.elapsedTime() / 1000).toInt(),
