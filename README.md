@@ -1,3 +1,10 @@
+A Google Maps API miatt meg kell adni egy API kulcsot a `local.properties` fájlban, amit a [Google oldalán](https://developers.google.com/maps) tudsz megszerezni:
+```
+MAPS_API_KEY=*API_kulcs*
+```
+Vagy csak használd ezt a kulcsot :P
+'AIzaSyBth1yRRB4vRuX4ava8k7UroWepwnrVGyc'
+
 # Házi feladat specifikáció
 
 Információk [itt](https://viauac00.github.io/laborok/hf)
