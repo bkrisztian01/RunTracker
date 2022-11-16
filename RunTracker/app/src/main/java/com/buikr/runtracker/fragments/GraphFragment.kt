@@ -42,15 +42,16 @@ class GraphFragment : Fragment() {
     }
 
     private fun setupChart() {
+        val textColor = MaterialColors.getColor(binding.root, com.google.android.material.R.attr.colorOnSecondaryContainer)
         chart = binding.chart
 
-//        chart.setDrawValueAboveBar(true);
-        chart.setMaxVisibleValueCount(7);
-        chart.setPinchZoom(false);
-        chart.setDrawGridBackground(false);
-//        chart.legend.isEnabled = false
+        chart.setDrawValueAboveBar(true)
+        chart.setMaxVisibleValueCount(7)
+        chart.setPinchZoom(false)
+        chart.setDrawGridBackground(false)
         chart.description.isEnabled = false
         chart.setTouchEnabled(false)
+        chart.legend.textColor =  textColor
 
         val xl = chart.xAxis
         xl.position = XAxisPosition.BOTTOM
@@ -58,10 +59,12 @@ class GraphFragment : Fragment() {
         xl.setDrawGridLines(false)
         xl.valueFormatter = MyXAxisValueFormatter()
         xl.granularity = 1f
+        xl.textColor = textColor
 
         val yl = chart.axisLeft
         yl.granularity = 0.25f
         yl.setDrawLabels(true)
+        yl.textColor = textColor
 
         val yr = chart.axisRight
         yr.setDrawAxisLine(false)

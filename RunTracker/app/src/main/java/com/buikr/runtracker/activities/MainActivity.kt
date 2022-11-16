@@ -33,11 +33,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager.beginTransaction()
-            .add(binding.fragmentContainer.id, listFragment, "RunList").commit()
-        supportFragmentManager.beginTransaction()
-            .add(binding.fragmentContainer.id, graphFragment, "Graph").hide(graphFragment)
-            .commit()
+        initFragments()
 
         binding.scrollview.setOnScrollChangeListener(::onScrollChange)
 
@@ -47,6 +43,14 @@ class MainActivity : AppCompatActivity() {
 
         window.statusBarColor =
             MaterialColors.getColor(binding.root, android.R.attr.colorBackground)
+    }
+
+    private fun initFragments() {
+        supportFragmentManager.beginTransaction()
+            .add(binding.fragmentContainer.id, listFragment, "RunList").commit()
+        supportFragmentManager.beginTransaction()
+            .add(binding.fragmentContainer.id, graphFragment, "Graph").hide(graphFragment)
+            .commit()
     }
 
     private fun onScrollChange(
@@ -65,15 +69,17 @@ class MainActivity : AppCompatActivity() {
     private fun onBottomNavItemSelected(menu: MenuItem): Boolean {
         when (menu.itemId) {
             R.id.runs -> {
-                supportFragmentManager.beginTransaction().hide(activeFragment).show(listFragment)
-                    .commit();
+                supportFragmentManager.beginTransaction().hide(activeFragment)
+                    .show(listFragment)
+                    .commit()
                 activeFragment = listFragment
                 binding.fabRun.show()
                 return true
             }
             R.id.graph -> {
-                supportFragmentManager.beginTransaction().hide(activeFragment).show(graphFragment)
-                    .commit();
+                supportFragmentManager.beginTransaction().hide(activeFragment)
+                    .show(graphFragment)
+                    .commit()
                 activeFragment = graphFragment
                 binding.fabRun.hide()
                 return true
