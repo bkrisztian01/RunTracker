@@ -1,11 +1,11 @@
 package com.buikr.runtracker.activities
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
-import android.view.View
 import android.view.View.OnTouchListener
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +21,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.color.MaterialColors
 
@@ -132,8 +133,14 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
     }
 
     override fun onMapReady(map: GoogleMap) {
-        val builder = LatLngBounds.builder()
+        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+            val style: MapStyleOptions =
+                MapStyleOptions.loadRawResourceStyle(this, R.raw.mapstyle_night)
+            map.setMapStyle(style)
+        }
 
+        val builder = LatLngBounds.builder()
         val latLngs = run.locationData
 
         if (run.locationData.isEmpty()) return
