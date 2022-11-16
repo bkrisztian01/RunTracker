@@ -9,7 +9,7 @@ Információk [itt](https://viauac00.github.io/laborok/hf)
 
 ## Mobil- és webes szoftverek
 ### 2022. október 22.
-### New Nike Run
+### Run tracker
 ### Bui Quanganh Krisztián - (SU4NX2)
 ### bui.krisztian01@gmail.com 
 ### Laborvezető: Sipos Tamás
