@@ -15,7 +15,7 @@
         android:id="@+id/iv_run_icon"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="?attr/colorTertiary"
+        android:background="?attr/colorSecondary"
         android:src="@drawable/ic_mon"
         app:shapeAppearanceOverlay="@style/RoundedCornersRunItem" />
 
