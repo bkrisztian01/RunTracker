@@ -72,7 +72,7 @@ class GraphFragment : Fragment() {
 
         chart.setFitBars(true);
 
-        runViewModel.lastSevenRuns.observe(viewLifecycleOwner) {
+        runViewModel.lastRuns.observe(viewLifecycleOwner) {
             setData(sumDistancesByDate(it))
         }
     }

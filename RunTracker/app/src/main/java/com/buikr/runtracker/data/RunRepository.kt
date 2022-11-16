@@ -57,8 +57,8 @@ class RunRepository(private val runDao: RunDao) {
         runDao.getRunById(id)?.toDomainModel()
     }
 
-    fun getSevenRunsBetweenDates(from: Long, to: Long): LiveData<List<Run>> {
-        return runDao.getSevenRunsBetweenDates(from, to).map { runs ->
+    fun getRunsBetweenDates(from: Long, to: Long): LiveData<List<Run>> {
+        return runDao.getRunsBetweenDates(from, to).map { runs ->
             runs.map { roomRun ->
                 roomRun.toDomainModel()
             }

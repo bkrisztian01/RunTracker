@@ -29,4 +29,9 @@
     <string name="location_permission_denied">Location permission denied</string>
     <string name="location_rationale_title">Permission needed!</string>
     <string name="location_permission_never_ask_again">Please grant location permission through settings to start a run!</string>
+    <string name="end_run_title">End run?</string>
+    <string name="end_run_message">Are you sure you want to end your run?</string>
+    <string name="discard_run_message">Are you sure you want to discard your run?</string>
+    <string name="discard_run_title">Discard run?</string>
+    <string name="notification_values">%2s - %.2f km</string>
 </resources>

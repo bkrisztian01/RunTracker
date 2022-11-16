@@ -3,15 +3,14 @@ package com.buikr.runtracker.activities
 import android.Manifest
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.buikr.runtracker.R
 import com.buikr.runtracker.databinding.ActivityMainBinding
@@ -23,17 +22,12 @@ import java.util.*
 @RuntimePermissions
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-        private const val PERMISSIONS_REQUEST_LOCATION = 100
-    }
-
     private lateinit var binding: ActivityMainBinding
 
     private val listFragment = ListFragment()
     private val graphFragment = GraphFragment()
     private var activeFragment: Fragment = listFragment
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -42,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .add(binding.fragmentContainer.id, listFragment, "RunList").commit()
         supportFragmentManager.beginTransaction()
-            .add(binding.fragmentContainer.id, graphFragment, "GraphList").hide(graphFragment)
+            .add(binding.fragmentContainer.id, graphFragment, "Graph").hide(graphFragment)
             .commit()
 
         binding.scrollview.setOnScrollChangeListener(::onScrollChange)
@@ -52,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener(::onBottomNavItemSelected)
 
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        window.statusBarColor = resources.getColor(R.color.md_theme_light_background)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.md_theme_light_surfaceVariant)
     }
 
     private fun onScrollChange(
@@ -117,7 +111,11 @@ class MainActivity : AppCompatActivity() {
 
     @OnNeverAskAgain(Manifest.permission.ACCESS_FINE_LOCATION)
     fun onLocationNeverAskAgain() {
-        Toast.makeText(this, getString(R.string.location_permission_never_ask_again), Toast.LENGTH_LONG)
+        Toast.makeText(
+            this,
+            getString(R.string.location_permission_never_ask_again),
+            Toast.LENGTH_LONG
+        )
             .show()
         startActivity(
             Intent(

@@ -14,7 +14,7 @@ class RunViewModel : ViewModel() {
     private val repository: RunRepository
 
     val allRuns: LiveData<List<Run>>
-    val lastSevenRuns: LiveData<List<Run>>
+    val lastRuns: LiveData<List<Run>>
 
     init {
         val runDao = RunTrackerApplication.runDatabase.runDao()
@@ -22,7 +22,7 @@ class RunViewModel : ViewModel() {
         allRuns = repository.getAllRuns()
         val calendar =  Calendar.getInstance()
         calendar.add(Calendar.DATE, -7)
-        lastSevenRuns = repository.getSevenRunsBetweenDates(calendar.timeInMillis, Calendar.getInstance().timeInMillis)
+        lastRuns = repository.getRunsBetweenDates(calendar.timeInMillis, Calendar.getInstance().timeInMillis)
     }
 
     fun insert(run: Run) = viewModelScope.launch {

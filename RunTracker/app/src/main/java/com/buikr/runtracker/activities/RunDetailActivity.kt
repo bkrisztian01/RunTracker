@@ -9,6 +9,7 @@ import android.view.View
 import android.view.View.OnTouchListener
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.buikr.runtracker.R
 import com.buikr.runtracker.data.Run
@@ -61,20 +62,17 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
         }
 
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        window.statusBarColor = resources.getColor(R.color.md_theme_light_background)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.md_theme_light_surfaceVariant)
 
         // Make scrollview not scrollable when panning on mapview
         binding.transparentImage.setOnTouchListener(OnTouchListener { v, event ->
             val action = event.action
             when (action) {
                 MotionEvent.ACTION_DOWN -> {
-                    // Disallow ScrollView to intercept touch events.
                     binding.scrollView.requestDisallowInterceptTouchEvent(true)
-                    // Disable touch on transparent view
                     false
                 }
                 MotionEvent.ACTION_UP -> {
-                    // Allow ScrollView to intercept touch events.
                     binding.scrollView.requestDisallowInterceptTouchEvent(false)
                     true
                 }

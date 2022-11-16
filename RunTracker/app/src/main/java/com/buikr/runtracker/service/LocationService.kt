@@ -1,18 +1,15 @@
 package com.buikr.runtracker.service
 
-import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.Service
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.*
-import android.util.Log
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import com.buikr.runtracker.R
 import com.buikr.runtracker.util.Stopwatch
@@ -38,12 +35,11 @@ class LocationService : Service(), LocationListener {
     private val updateNotificationTask = object : Runnable {
         override fun run() {
             updateNotification(
-                "${msToFormatedString(stopwatch.elapsedTime)} - ${
-                    String.format(
-                        "%.2f",
-                        distance
-                    )
-                } km"
+                getString(
+                    R.string.notification_values,
+                    msToFormatedString(stopwatch.elapsedTime),
+                    distance
+                )
             )
             mainHandler.postDelayed(this, 1000)
         }
@@ -59,22 +55,12 @@ class LocationService : Service(), LocationListener {
         startLocationUpdates()
     }
 
+    @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
         locationList.clear()
         if (!isLocationUpdateRunning) {
             isLocationUpdateRunning = true
             mLocationManager = this.getSystemService(LOCATION_SERVICE) as LocationManager
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return
-            }
             mLocationManager?.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
                 UPDATE_INTERVAL,
@@ -89,38 +75,37 @@ class LocationService : Service(), LocationListener {
             distance += location.distanceTo(locationList.last()).toDouble() / 1000
         }
         locationList += location
-        Log.d("LOCATION", "onLocationChanged ----- location=$location")
     }
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Create the NotificationChannel
             val name = getString(com.buikr.runtracker.R.string.session)
-            val descriptionText = getString(com.buikr.runtracker.R.string.notification_description)
+            val descriptionText = getString(R.string.notification_description)
             val importance = NotificationManager.IMPORTANCE_LOW
             val mChannel = NotificationChannel(CHANNEL_ID, name, importance)
             mChannel.description = descriptionText
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(mChannel)
         }
 
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(getString(R.string.running))
-            .setContentText("00:00 - 0.0km")
+            .setContentText(getString(
+                R.string.notification_values,
+                msToFormatedString(stopwatch.elapsedTime),
+                distance
+            ))
             .setCategory(Notification.CATEGORY_SERVICE)
-            .setSmallIcon(com.buikr.runtracker.R.drawable.ic_run)
+            .setSmallIcon(R.drawable.ic_run)
             .build()
         startForeground(NOTIFICATION_ID, notification)
         return START_NOT_STICKY
     }
 
-    override fun onBind(intent: Intent): IBinder? {
+    override fun onBind(intent: Intent): IBinder {
         return binder
     }
 
-    /* Remove the locationlistener updates when Services is stopped */
     override fun onDestroy() {
         mainHandler.removeCallbacks(updateNotificationTask)
 
@@ -137,7 +122,7 @@ class LocationService : Service(), LocationListener {
             .setContentTitle(getString(R.string.running))
             .setContentText(text)
             .setCategory(Notification.CATEGORY_SERVICE)
-            .setSmallIcon(com.buikr.runtracker.R.drawable.ic_run)
+            .setSmallIcon(R.drawable.ic_run)
             .build()
 
         val mNotificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager

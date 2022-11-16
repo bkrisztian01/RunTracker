@@ -10,7 +10,7 @@ class DateConverter {
     }
 
     @TypeConverter
-    fun dateToTimestamp(date: Date?): Long? {
+    fun toTimestamp(date: Date?): Long? {
         return date?.time
     }
 }

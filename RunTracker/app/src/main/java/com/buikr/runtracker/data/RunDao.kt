@@ -24,5 +24,5 @@ interface RunDao {
     fun getRunById(id: Long?): RoomRun?
 
     @Query("SELECT * FROM run WHERE :from <= date AND date <= :to ORDER BY date")
-    fun getSevenRunsBetweenDates(from: Long, to: Long): LiveData<List<RoomRun>>
+    fun getRunsBetweenDates(from: Long, to: Long): LiveData<List<RoomRun>>
 }
