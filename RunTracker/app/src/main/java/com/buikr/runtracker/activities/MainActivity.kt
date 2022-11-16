@@ -45,15 +45,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setOnItemSelectedListener(::onBottomNavItemSelected)
 
-        window.statusBarColor = MaterialColors.getColor(binding.root, android.R.attr.colorBackground)
+        window.statusBarColor =
+            MaterialColors.getColor(binding.root, android.R.attr.colorBackground)
     }
 
     private fun onScrollChange(
-        v: View,
-        scrollX: Int,
-        scrollY: Int,
-        oldScrollX: Int,
-        oldScrollY: Int
+        v: View, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int
     ) {
         run {
             val dy = oldScrollY - scrollY
@@ -98,24 +95,19 @@ class MainActivity : AppCompatActivity() {
 
     @OnShowRationale(Manifest.permission.ACCESS_FINE_LOCATION)
     fun showRationaleForLocation(request: PermissionRequest) {
-        val alertDialog = AlertDialog.Builder(this)
-            .setTitle(getString(R.string.location_rationale_title))
-            .setMessage(R.string.location_permission_explanation)
-            .setCancelable(false)
-            .setPositiveButton(R.string.button_ok) { dialog, id -> request.proceed() }
-            .setNegativeButton(R.string.exit) { dialog, id -> request.cancel() }
-            .create()
+        val alertDialog =
+            AlertDialog.Builder(this).setTitle(getString(R.string.location_rationale_title))
+                .setMessage(R.string.location_permission_explanation).setCancelable(false)
+                .setPositiveButton(R.string.button_ok) { dialog, id -> request.proceed() }
+                .setNegativeButton(R.string.exit) { dialog, id -> request.cancel() }.create()
         alertDialog.show()
     }
 
     @OnNeverAskAgain(Manifest.permission.ACCESS_FINE_LOCATION)
     fun onLocationNeverAskAgain() {
         Toast.makeText(
-            this,
-            getString(R.string.location_permission_never_ask_again),
-            Toast.LENGTH_LONG
-        )
-            .show()
+            this, getString(R.string.location_permission_never_ask_again), Toast.LENGTH_LONG
+        ).show()
         startActivity(
             Intent(
                 Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
@@ -125,9 +117,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
