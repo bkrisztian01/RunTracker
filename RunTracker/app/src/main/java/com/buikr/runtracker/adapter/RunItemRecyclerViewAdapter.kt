@@ -1,9 +1,7 @@
 package com.buikr.runtracker.adapter
 
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -27,7 +25,7 @@ class RunItemRecyclerViewAdapter :
             }
         }
 
-        val weekDayIcon = mapOf(
+        private val weekDayIcon = mapOf(
             Calendar.MONDAY to R.drawable.ic_mon,
             Calendar.TUESDAY to R.drawable.ic_tue,
             Calendar.WEDNESDAY to R.drawable.ic_wed,
@@ -45,7 +43,6 @@ class RunItemRecyclerViewAdapter :
         return ViewHolder(RunRowBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val run = this.getItem(position)
 

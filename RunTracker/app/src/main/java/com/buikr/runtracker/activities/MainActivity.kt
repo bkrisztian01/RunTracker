@@ -1,4 +1,4 @@
-package com.buikr.runtracker
+package com.buikr.runtracker.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -8,38 +8,44 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
-import com.buikr.runtracker.adapter.RunItemRecyclerViewAdapter
-import com.buikr.runtracker.data.Run
+import androidx.fragment.app.Fragment
+import com.buikr.runtracker.R
 import com.buikr.runtracker.databinding.ActivityMainBinding
-import com.buikr.runtracker.viewmodel.RunViewModel
+import com.buikr.runtracker.fragments.GraphFragment
+import com.buikr.runtracker.fragments.ListFragment
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), RunItemRecyclerViewAdapter.RunItemClickListener {
+class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val PERMISSIONS_REQUEST_LOCATION = 100
     }
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var runItemRecyclerViewAdapter: RunItemRecyclerViewAdapter
-    private lateinit var runViewModel: RunViewModel
 
+    private val listFragment = ListFragment()
+    private val graphFragment = GraphFragment()
+    private var activeFragment: Fragment = listFragment
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportFragmentManager.beginTransaction()
+            .add(binding.fragmentContainer.id, listFragment, "RunList").commit()
+        supportFragmentManager.beginTransaction()
+            .add(binding.fragmentContainer.id, graphFragment, "GraphList").hide(graphFragment).commit()
 
         binding.scrollview.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
             run {
@@ -52,67 +58,32 @@ class MainActivity : AppCompatActivity(), RunItemRecyclerViewAdapter.RunItemClic
             }
         }
 
-        initRecyclerViewAdapter()
-
-        binding.searchviewRuns.setOnClickListener {
-            binding.searchviewRuns.isIconified = false
-        }
-
-        binding.searchviewRuns.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
-            android.widget.SearchView.OnQueryTextListener {
-            override fun onQueryTextChange(qString: String): Boolean {
-                runItemRecyclerViewAdapter.filter(qString);
-                binding.scrollview.scrollY = 0
-                return true;
-            }
-
-            override fun onQueryTextSubmit(qString: String): Boolean {
-                runItemRecyclerViewAdapter.filter(qString);
-                binding.scrollview.scrollY = 0
-                return true;
-            }
-        })
-
         binding.fabRun.setOnClickListener {
             checkLocationPermission()
         }
+
+        binding.bottomNavigation.setOnItemSelectedListener(::onBottomNavItemSelected)
 
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         window.statusBarColor = resources.getColor(R.color.md_theme_light_background)
     }
 
-    private fun initRecyclerViewAdapter() {
-        runItemRecyclerViewAdapter = RunItemRecyclerViewAdapter()
-        runItemRecyclerViewAdapter.itemClickListener = this
-        binding.rvRuns.adapter = runItemRecyclerViewAdapter
-
-        runViewModel = ViewModelProvider(this)[RunViewModel::class.java]
-
-//        // For debugging
-//        val latLngs = mutableListOf(
-//            LatLng(31.0, 31.0),
-//            LatLng(10.0, 31.0),
-//            LatLng(10.0, 10.0),
-//            LatLng(31.0, 131.0),
-//            LatLng(31.0, 31.0),
-//        )
-//
-//        runViewModel.insert(
-//            Run(
-//                0,
-//                "Monday run",
-//                Calendar.getInstance().time,
-//                "Legyen mar vege \n\n\n\n\n\n\n\n\n\nIstenem",
-//                123123,
-//                1.23,
-//                latLngs
-//            )
-//        )
-
-        runViewModel.allRuns.observe(this) { runs ->
-            runItemRecyclerViewAdapter.allRuns = runs
-            runItemRecyclerViewAdapter.submitList(runs)
+    private fun onBottomNavItemSelected(menu: MenuItem): Boolean {
+        when (menu.itemId) {
+            R.id.runs -> {
+                supportFragmentManager.beginTransaction().hide(activeFragment).show(listFragment).commit();
+                activeFragment = listFragment
+                binding.fabRun.show()
+                return true
+            }
+            R.id.graph -> {
+                supportFragmentManager.beginTransaction().hide(activeFragment).show(graphFragment).commit();
+                activeFragment = graphFragment
+                binding.fabRun.hide()
+                return true
+            }
         }
+        return false
     }
 
     private fun checkLocationPermission() {
@@ -210,11 +181,5 @@ class MainActivity : AppCompatActivity(), RunItemRecyclerViewAdapter.RunItemClic
 
     private fun startRunningSession() {
         startActivity(Intent(this, RunSessionActivity::class.java))
-    }
-
-    override fun onItemClick(run: Run) {
-        val intent = Intent(this, RunDetailActivity::class.java)
-        intent.putExtra(RunDetailActivity.KEY_RUN, run.id)
-        startActivity(intent)
     }
 }

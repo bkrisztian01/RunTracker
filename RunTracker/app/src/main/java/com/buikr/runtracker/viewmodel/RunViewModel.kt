@@ -8,16 +8,21 @@ import com.buikr.runtracker.RunTrackerApplication
 import com.buikr.runtracker.data.Run
 import com.buikr.runtracker.data.RunRepository
 import kotlinx.coroutines.launch
+import java.util.*
 
 class RunViewModel : ViewModel() {
     private val repository: RunRepository
 
     val allRuns: LiveData<List<Run>>
+    val lastSevenRuns: LiveData<List<Run>>
 
     init {
         val runDao = RunTrackerApplication.runDatabase.runDao()
         repository = RunRepository(runDao)
         allRuns = repository.getAllRuns()
+        val calendar =  Calendar.getInstance()
+        calendar.add(Calendar.DATE, -7)
+        lastSevenRuns = repository.getSevenRunsBetweenDates(calendar.timeInMillis, Calendar.getInstance().timeInMillis)
     }
 
     fun insert(run: Run) = viewModelScope.launch {

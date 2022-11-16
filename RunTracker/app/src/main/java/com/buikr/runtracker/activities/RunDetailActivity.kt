@@ -1,4 +1,4 @@
-package com.buikr.runtracker
+package com.buikr.runtracker.activities
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -10,6 +10,7 @@ import android.view.View.OnTouchListener
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.buikr.runtracker.R
 import com.buikr.runtracker.data.Run
 import com.buikr.runtracker.databinding.ActivityRunDetailBinding
 import com.buikr.runtracker.fragments.EditRunDialogFragment

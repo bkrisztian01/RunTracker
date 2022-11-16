@@ -5,7 +5,7 @@ import androidx.room.*
 
 @Dao
 interface RunDao {
-    @Query("SELECT * FROM run")
+    @Query("SELECT * FROM run ORDER BY date DESC")
     fun getAllRuns(): LiveData<List<RoomRun>>
 
     @Insert
@@ -22,4 +22,7 @@ interface RunDao {
 
     @Query("SELECT * FROM run WHERE id = :id")
     fun getRunById(id: Long?): RoomRun?
+
+    @Query("SELECT * FROM run WHERE :from <= date AND date <= :to ORDER BY date")
+    fun getSevenRunsBetweenDates(from: Long, to: Long): LiveData<List<RoomRun>>
 }

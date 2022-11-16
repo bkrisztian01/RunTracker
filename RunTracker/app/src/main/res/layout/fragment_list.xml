@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchview_runs"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/layout_searchbar_bg"
+        android:layout_margin="5dp"
+        app:showAsAction="always" />
+
+    <View style="@style/Divider"
+        android:layout_margin="5dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_runs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/run_row" />
+
+</LinearLayout>

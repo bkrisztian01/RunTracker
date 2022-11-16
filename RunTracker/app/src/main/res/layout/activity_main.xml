@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".activities.MainActivity"
     android:background="@color/md_theme_light_background"
     android:orientation="vertical">
 
@@ -44,31 +44,10 @@
         android:paddingEnd="5dp"
         android:paddingBottom="5dp">
 
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.appcompat.widget.SearchView
-                android:id="@+id/searchview_runs"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/layout_searchbar_bg"
-                android:layout_margin="5dp"
-                app:showAsAction="always" />
-
-            <View style="@style/Divider"
-                android:layout_margin="5dp"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_runs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layoutManager="LinearLayoutManager"
-                tools:listitem="@layout/run_row" />
-
-        </LinearLayout>
+            android:layout_height="match_parent" />
 
     </androidx.core.widget.NestedScrollView>
 

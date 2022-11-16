@@ -1,4 +1,4 @@
-package com.buikr.runtracker
+package com.buikr.runtracker.activities
 
 import android.annotation.SuppressLint
 import android.content.ComponentName
@@ -12,6 +12,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import com.buikr.runtracker.R
 import com.buikr.runtracker.data.Run
 import com.buikr.runtracker.databinding.ActivityRunSessionBinding
 import com.buikr.runtracker.service.LocationService
