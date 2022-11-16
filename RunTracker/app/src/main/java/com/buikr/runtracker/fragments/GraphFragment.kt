@@ -4,10 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.buikr.runtracker.R
 import com.buikr.runtracker.data.Run
 import com.buikr.runtracker.databinding.FragmentGraphBinding
 import com.buikr.runtracker.util.MyXAxisValueFormatter
@@ -18,6 +16,7 @@ import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.google.android.material.color.MaterialColors
 import java.util.*
 import kotlin.math.floor
 
@@ -121,7 +120,7 @@ class GraphFragment : Fragment() {
             distanceSet = BarDataSet(values, "Distance")
             distanceSet.setDrawIcons(false)
             context?.let {
-                distanceSet.color = ContextCompat.getColor(it, R.color.md_theme_light_tertiary)
+                distanceSet.color = MaterialColors.getColor(binding.root, com.google.android.material.R.attr.colorSecondary)
             }
             val dataSets: ArrayList<IBarDataSet> = ArrayList()
             dataSets.add(distanceSet)

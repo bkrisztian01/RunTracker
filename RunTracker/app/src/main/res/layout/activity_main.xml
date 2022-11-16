@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity"
-    android:background="@color/md_theme_light_background"
+    android:background="?android:attr/colorBackground"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/collapsingToolbarLayoutLargeSize"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-            app:contentScrim="@color/md_theme_light_background"
+            app:contentScrim="?android:attr/colorBackground"
             app:title="Runs"
             app:expandedTitleTextAppearance="@style/ExpandedAppBarMain" >
 

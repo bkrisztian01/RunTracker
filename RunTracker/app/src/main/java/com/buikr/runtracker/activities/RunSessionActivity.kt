@@ -9,7 +9,6 @@ import android.os.IBinder
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.buikr.runtracker.R
 import com.buikr.runtracker.data.Run
@@ -21,6 +20,7 @@ import com.buikr.runtracker.viewmodel.RunViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.color.MaterialColors
 import java.util.*
 
 
@@ -64,8 +64,8 @@ class RunSessionActivity : AppCompatActivity() {
 
         binding.btTime.setOnClickListener(::timeButtonClick)
 
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        window.statusBarColor = ContextCompat.getColor(this, R.color.md_theme_light_surfaceVariant)
+
+        window.statusBarColor = MaterialColors.getColor(binding.root, com.google.android.material.R.attr.colorSurfaceVariant)
 
         startService(Intent(this, LocationService::class.java))
         bindService(Intent(this, LocationService::class.java), connection, Context.BIND_AUTO_CREATE)

@@ -10,12 +10,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.buikr.runtracker.R
 import com.buikr.runtracker.databinding.ActivityMainBinding
 import com.buikr.runtracker.fragments.GraphFragment
 import com.buikr.runtracker.fragments.ListFragment
+import com.google.android.material.color.MaterialColors
 import permissions.dispatcher.*
 import java.util.*
 
@@ -45,8 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setOnItemSelectedListener(::onBottomNavItemSelected)
 
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        window.statusBarColor = ContextCompat.getColor(this, R.color.md_theme_light_surfaceVariant)
+        window.statusBarColor = MaterialColors.getColor(binding.root, android.R.attr.colorBackground)
     }
 
     private fun onScrollChange(

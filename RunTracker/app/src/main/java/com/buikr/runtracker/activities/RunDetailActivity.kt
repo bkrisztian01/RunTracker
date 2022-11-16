@@ -9,7 +9,6 @@ import android.view.View
 import android.view.View.OnTouchListener
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.buikr.runtracker.R
 import com.buikr.runtracker.data.Run
@@ -23,6 +22,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.material.color.MaterialColors
 
 
 class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDialogListener,
@@ -57,12 +57,14 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
             binding.tvDescription.text = run.description
             binding.tvDate.text = run.date.formatToString("MM/dd/yyyy - HH:mm")
 
-            val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+            val mapFragment =
+                supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
             mapFragment.getMapAsync(this)
         }
 
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        window.statusBarColor = ContextCompat.getColor(this, R.color.md_theme_light_surfaceVariant)
+
+        window.statusBarColor =
+            MaterialColors.getColor(binding.root, android.R.attr.colorBackground)
 
         // Make scrollview not scrollable when panning on mapview
         binding.transparentImage.setOnTouchListener(OnTouchListener { v, event ->
@@ -137,7 +139,12 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
         if (run.locationData.isEmpty()) return
 
         val polyline = PolylineOptions()
-            .color(R.color.md_theme_light_tertiary)
+            .color(
+                MaterialColors.getColor(
+                    binding.root,
+                    com.google.android.material.R.attr.colorTertiary
+                )
+            )
 
         for (latLng in latLngs) {
             polyline.add(latLng)
