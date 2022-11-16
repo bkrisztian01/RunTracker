@@ -73,4 +73,9 @@ dependencies {
 
     // Charts
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // PermissionDispatcher
+    def pd_version = "4.9.2"
+    implementation "com.github.permissions-dispatcher:permissionsdispatcher:$pd_version"
+    kapt "com.github.permissions-dispatcher:permissionsdispatcher-processor:$pd_version"
 }
