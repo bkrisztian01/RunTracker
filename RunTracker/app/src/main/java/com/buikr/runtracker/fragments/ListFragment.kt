@@ -50,6 +50,12 @@ class ListFragment : Fragment(), RunItemRecyclerViewAdapter.RunItemClickListener
         return binding.root
     }
 
+    override fun onPause() {
+        super.onPause()
+
+        binding.searchviewRuns.setQuery("", false)
+    }
+
     private fun initRecyclerViewAdapter() {
         runItemRecyclerViewAdapter = RunItemRecyclerViewAdapter()
         runItemRecyclerViewAdapter.itemClickListener = this

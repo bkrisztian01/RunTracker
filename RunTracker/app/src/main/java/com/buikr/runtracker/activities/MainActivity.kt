@@ -33,8 +33,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initFragments()
-
         binding.scrollview.setOnScrollChangeListener(::onScrollChange)
 
         binding.fabRun.setOnClickListener { startRunningSessionWithPermissionCheck() }
@@ -45,12 +43,42 @@ class MainActivity : AppCompatActivity() {
             MaterialColors.getColor(binding.root, android.R.attr.colorBackground)
     }
 
-    private fun initFragments() {
+    override fun onStart() {
+        super.onStart()
+
+        attachFragments()
+    }
+
+    override fun onStop() {
+        detachFragment()
+
+        super.onStop()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (activeFragment == listFragment) {
+            binding.bottomNavigation.menu.getItem(1).isChecked = true
+            binding.bottomNavigation.menu.getItem(0).isChecked = false
+        } else {
+            binding.bottomNavigation.menu.getItem(0).isChecked = true
+            binding.bottomNavigation.menu.getItem(1).isChecked = false
+        }
+    }
+
+    private fun attachFragments() {
         supportFragmentManager.beginTransaction()
             .add(binding.fragmentContainer.id, listFragment, "RunList").commit()
         supportFragmentManager.beginTransaction()
             .add(binding.fragmentContainer.id, graphFragment, "Graph").hide(graphFragment)
             .commit()
+        activeFragment = listFragment
+    }
+
+    private fun detachFragment() {
+        supportFragmentManager.beginTransaction().remove(listFragment).commit()
+        supportFragmentManager.beginTransaction().remove(graphFragment).commit()
     }
 
     private fun onScrollChange(
