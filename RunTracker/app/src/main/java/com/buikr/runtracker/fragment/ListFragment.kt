@@ -1,4 +1,4 @@
-package com.buikr.runtracker.fragments
+package com.buikr.runtracker.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.buikr.runtracker.activities.RunDetailActivity
+import com.buikr.runtracker.activity.RunDetailActivity
 import com.buikr.runtracker.adapter.RunItemRecyclerViewAdapter
 import com.buikr.runtracker.data.Run
 import com.buikr.runtracker.databinding.FragmentListBinding

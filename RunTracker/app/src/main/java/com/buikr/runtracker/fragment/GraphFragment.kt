@@ -1,4 +1,4 @@
-package com.buikr.runtracker.fragments
+package com.buikr.runtracker.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

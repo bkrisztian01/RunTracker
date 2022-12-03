@@ -1,4 +1,4 @@
-package com.buikr.runtracker.activities
+package com.buikr.runtracker.activity
 
 import android.Manifest
 import android.content.Intent
@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.buikr.runtracker.R
 import com.buikr.runtracker.databinding.ActivityMainBinding
-import com.buikr.runtracker.fragments.GraphFragment
-import com.buikr.runtracker.fragments.ListFragment
+import com.buikr.runtracker.fragment.GraphFragment
+import com.buikr.runtracker.fragment.ListFragment
 import com.google.android.material.color.MaterialColors
 import permissions.dispatcher.*
 import java.util.*

@@ -10,16 +10,22 @@ import com.buikr.runtracker.data.RunRepository
 import kotlinx.coroutines.launch
 import java.util.*
 
-class RunViewModel : ViewModel() {
+class DetailViewModel : ViewModel() {
     private val repository: RunRepository = RunTrackerApplication.runRepository
 
-    val allRuns: LiveData<List<Run>>
-    val lastRuns: LiveData<List<Run>>
+    fun getById(id: Long): MutableLiveData<Run?> {
+        val result = MutableLiveData<Run?>()
+        viewModelScope.launch {
+            result.postValue(repository.getById(id))
+        }
+        return result
+    }
 
-    init {
-        allRuns = repository.getAllRuns()
-        val calendar =  Calendar.getInstance()
-        calendar.add(Calendar.DATE, -7)
-        lastRuns = repository.getRunsBetweenDates(calendar.timeInMillis, Calendar.getInstance().timeInMillis)
+    fun delete(run: Run) = viewModelScope.launch {
+        repository.delete(run)
+    }
+
+    fun update(run: Run) = viewModelScope.launch {
+        repository.update(run)
     }
 }

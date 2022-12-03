@@ -1,4 +1,4 @@
-package com.buikr.runtracker.activities
+package com.buikr.runtracker.activity
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
@@ -13,9 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.buikr.runtracker.R
 import com.buikr.runtracker.data.Run
 import com.buikr.runtracker.databinding.ActivityRunDetailBinding
-import com.buikr.runtracker.fragments.EditRunDialogFragment
+import com.buikr.runtracker.fragment.EditRunDialogFragment
 import com.buikr.runtracker.util.formatToString
-import com.buikr.runtracker.viewmodel.RunViewModel
+import com.buikr.runtracker.viewmodel.DetailViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -33,7 +33,7 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
     }
 
     private lateinit var binding: ActivityRunDetailBinding
-    private lateinit var runViewModel: RunViewModel
+    private lateinit var detailViewModel: DetailViewModel
     private lateinit var run: Run
 
     @SuppressLint("ClickableViewAccessibility")
@@ -45,9 +45,9 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
         setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        runViewModel = ViewModelProvider(this)[RunViewModel::class.java]
+        detailViewModel = ViewModelProvider(this)[DetailViewModel::class.java]
 
-        runViewModel.getById(this.intent.getLongExtra(KEY_RUN, 0)).observe(this) { r ->
+        detailViewModel.getById(this.intent.getLongExtra(KEY_RUN, 0)).observe(this) { r ->
             this.run = r!!
             binding.toolbarLayout.title = run.title
             binding.tvDistanceValue.text = getString(R.string.distance_value, run.distance)
@@ -112,7 +112,7 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
                     AlertDialog.BUTTON_POSITIVE,
                     getString(R.string.yes)
                 ) { dialog, which ->
-                    runViewModel.delete(run)
+                    detailViewModel.delete(run)
                     finish()
                 }
                 alertDialog.setButton(
@@ -127,7 +127,7 @@ class RunDetailActivity : AppCompatActivity(), EditRunDialogFragment.EditRunDial
     override fun onRunEdited(name: String, description: String) {
         run.title = name;
         run.description = description;
-        runViewModel.update(run)
+        detailViewModel.update(run)
         binding.toolbarLayout.title = run.title
         binding.tvDescription.text = run.description
     }

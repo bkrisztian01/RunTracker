@@ -1,4 +1,4 @@
-package com.buikr.runtracker.activities
+package com.buikr.runtracker.activity
 
 import android.content.ComponentName
 import android.content.Context
@@ -17,6 +17,7 @@ import com.buikr.runtracker.service.LocationService
 import com.buikr.runtracker.util.elapsedTime
 import com.buikr.runtracker.util.formatToString
 import com.buikr.runtracker.viewmodel.RunViewModel
+import com.buikr.runtracker.viewmodel.SessionViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.maps.model.LatLng
@@ -96,7 +97,7 @@ class RunSessionActivity : AppCompatActivity() {
     }
 
     private fun saveRun() {
-        val runViewModel = ViewModelProvider(this)[RunViewModel::class.java]
+        val runViewModel = ViewModelProvider(this)[SessionViewModel::class.java]
         val today = Calendar.getInstance().time
         locationService?.distance?.let { distance ->
             runViewModel.insert(

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorSurfaceVariant"
-    tools:context=".activities.RunSessionActivity">
+    tools:context=".activity.RunSessionActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
