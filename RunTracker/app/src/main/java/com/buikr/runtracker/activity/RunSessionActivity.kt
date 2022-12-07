@@ -80,20 +80,11 @@ class RunSessionActivity : AppCompatActivity() {
 
 
     private fun timeButtonClick(v: View) {
-        val alertDialog: AlertDialog = AlertDialog.Builder(this).create()
-        alertDialog.setTitle(getString(R.string.end_run_title))
-        alertDialog.setMessage(getString(R.string.end_run_message))
-        alertDialog.setButton(
-            AlertDialog.BUTTON_POSITIVE,
-            getString(R.string.yes)
-        ) { dialog, which ->
-            saveRun()
-            finish()
+        if (locationService != null && !locationService!!.locationList.isEmpty()) {
+            showEndRunDialog()
+        } else {
+            showDiscardRunDialog()
         }
-        alertDialog.setButton(
-            AlertDialog.BUTTON_NEGATIVE, getString(R.string.no)
-        ) { dialog, which -> dialog.dismiss() }
-        alertDialog.show()
     }
 
     private fun saveRun() {
@@ -130,7 +121,24 @@ class RunSessionActivity : AppCompatActivity() {
         return getString(R.string.pace_value, (pace / 60).toInt(), (pace % 60).toInt())
     }
 
-    override fun onBackPressed() {
+    private fun showEndRunDialog() {
+        val alertDialog: AlertDialog = AlertDialog.Builder(this).create()
+        alertDialog.setTitle(getString(R.string.end_run_title))
+        alertDialog.setMessage(getString(R.string.end_run_message))
+        alertDialog.setButton(
+            AlertDialog.BUTTON_POSITIVE,
+            getString(R.string.yes)
+        ) { dialog, which ->
+            saveRun()
+            finish()
+        }
+        alertDialog.setButton(
+            AlertDialog.BUTTON_NEGATIVE, getString(R.string.no)
+        ) { dialog, which -> dialog.dismiss() }
+        alertDialog.show()
+    }
+
+    private fun showDiscardRunDialog() {
         val alertDialog: AlertDialog = AlertDialog.Builder(this).create()
         alertDialog.setTitle(getString(R.string.discard_run_title))
         alertDialog.setMessage(getString(R.string.discard_run_message))
@@ -141,5 +149,9 @@ class RunSessionActivity : AppCompatActivity() {
             AlertDialog.BUTTON_NEGATIVE, getString(R.string.no)
         ) { dialog, which -> dialog.dismiss() }
         alertDialog.show()
+    }
+
+    override fun onBackPressed() {
+        showDiscardRunDialog()
     }
 }
