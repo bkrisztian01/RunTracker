@@ -1,6 +1,6 @@
 A Google Maps API miatt meg kell adni egy API kulcsot a `local.properties` fájlban:
 ```
-MAPS_API_KEY=AIzaSyBth1yRRB4vRuX4ava8k7UroWepwnrVGyc
+MAPS_API_KEY=**API key**
 ```
 
 # Házi feladat specifikáció
